@@ -27,3 +27,20 @@ TEST_CASE("Test die class")
 	
 }
 
+
+TEST_CASE("test roll class")
+{
+    srand(time(NULL));
+    for (int i=0;i<10;i++)
+    {
+    Die d;
+    Die d2;
+    Roll r(d,d2);
+    r.roll_die();
+    REQUIRE(r.roll_value()>=2);
+    REQUIRE(r.roll_value()<=12);
+    }
+
+}
+
+
