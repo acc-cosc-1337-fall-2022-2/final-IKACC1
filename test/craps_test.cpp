@@ -44,3 +44,22 @@ TEST_CASE("test roll class")
 }
 
 
+TEST_CASE("Shooter Class")
+{
+    srand(time(NULL));
+    for (int i=0;i<10;i++)
+    {
+    Die d;
+    Die d2;
+    Shooter s;
+    Roll* u;
+    u=(s.throw_die(d,d2));
+    REQUIRE(u);// check that we have indeed returned the pointer
+    REQUIRE(u->roll_value()>=2);//check value in correct range
+    REQUIRE(u->roll_value()<=12);
+    delete  u;
+    }
+
+}
+
+
