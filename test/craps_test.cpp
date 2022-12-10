@@ -63,3 +63,83 @@ TEST_CASE("Shooter Class")
 }
 
 
+
+
+
+TEST_CASE("test ComeOutPhase class")
+{//result is random, so use loop that won't end until all tests positive to test.
+//not infinite loop: we know statistically, the values will come up
+//even the least likely is 2/12. 
+//in practice it validates all 3 in an average of 5 loops
+    srand(time(NULL));
+    bool flag_natural=false;
+    bool flag_craps=false;
+    bool flag_point=false;
+    while (flag_natural==false|| flag_craps==false||
+    flag_point==false)
+    {
+    Die d;
+    Die d2;
+    Shooter s;
+    Roll* u;
+    u=(s.throw_die(d,d2));
+    ComeOutPhase c;
+    auto r=c.get_outcome(u);
+    auto n = RollOutcome::natural;
+    auto c1 = RollOutcome::craps;
+    auto p = RollOutcome::point;
+    REQUIRE((r==n||r==c1||r==p));
+    if(r==n)
+    {
+        flag_natural=true;
+    }
+    if(r==c1)
+    {
+        flag_craps=true;
+    }
+    if(r==p)
+    {
+        flag_point=true;
+    }
+    delete  u;
+    }
+
+}
+
+
+TEST_CASE("test PointPhase class")
+{//same logic as above.
+    srand(time(NULL));
+    bool flag_seven_out=false;
+    bool flag_nopoint=false;
+    bool flag_point=false;
+    while (flag_seven_out==false|| flag_nopoint==false||
+    flag_point==false)
+    {
+    Die d;
+    Die d2;
+    Shooter s;
+    Roll* u;
+    u=(s.throw_die(d,d2));
+    PointPhase c(6);
+    auto r=c.get_outcome(u);
+    auto so = RollOutcome::seven_out;
+    auto np = RollOutcome::nopoint;
+    auto p = RollOutcome::point;
+    REQUIRE((r==np||r==so||r==p));
+    if(r==so)
+    {
+        flag_seven_out=true;
+    }
+    if(r==np)
+    {
+        flag_nopoint=true;
+    }
+    if(r==p)
+    {
+        flag_point=true;
+    }
+    delete  u;
+    }
+
+}
